@@ -7,7 +7,7 @@ namespace SimpleProtocol.Engine.Test
     public class ProtocolWriteEngineTest
     {
         [Test]
-        public void Created_WithoutStart_CalledAddDetail_CalledAddSearchableObject_ThrowsException()
+        public void Created_WithoutStart_CalledAddDetail_CalledAddLinkedObject_ThrowsException()
         {
             var writeEngine = ProtocolWriteEngineHelper.ProtocolWriteEngineWithRepositoryMock();
             Assert.Throws<ProtocolWriteEngineInnerStateException>(() => writeEngine.AddDetail(null));
@@ -26,7 +26,7 @@ namespace SimpleProtocol.Engine.Test
         }
 
         [Test]
-        public void Created_WithStart_CalledAddDetail_CalledAddSearchableObject_Ok()
+        public void Created_WithStart_CalledAddDetail_CalledAddLinkedObject_Ok()
         {
             var writeEngine = ProtocolWriteEngineHelper.ProtocolWriteEngineWithRepositoryMock();
             writeEngine.Start(null);
