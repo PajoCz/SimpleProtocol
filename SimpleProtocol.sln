@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleProtocol.Contract", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleProtocol.Engine.Test", "SimpleProtocol.Engine.Test\SimpleProtocol.Engine.Test.csproj", "{D11CF3D4-2D18-421A-8994-09D87F5AE21E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleProtocol.Repository.SqlDapper", "SimpleProtocol.Repository.SqlDapper\SimpleProtocol.Repository.SqlDapper.csproj", "{BD6ABFCC-5F85-4C54-9388-0CA43DA02BF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleProtocol.Repository.SqlDapper.Test", "SimpleProtocol.Repository.SqlDapper.Test\SimpleProtocol.Repository.SqlDapper.Test.csproj", "{D2409330-AB15-4FF3-87CC-63233FC3714D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{D11CF3D4-2D18-421A-8994-09D87F5AE21E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D11CF3D4-2D18-421A-8994-09D87F5AE21E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D11CF3D4-2D18-421A-8994-09D87F5AE21E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD6ABFCC-5F85-4C54-9388-0CA43DA02BF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD6ABFCC-5F85-4C54-9388-0CA43DA02BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD6ABFCC-5F85-4C54-9388-0CA43DA02BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD6ABFCC-5F85-4C54-9388-0CA43DA02BF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2409330-AB15-4FF3-87CC-63233FC3714D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2409330-AB15-4FF3-87CC-63233FC3714D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2409330-AB15-4FF3-87CC-63233FC3714D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2409330-AB15-4FF3-87CC-63233FC3714D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

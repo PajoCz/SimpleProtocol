@@ -6,5 +6,6 @@
         Warning,
         Error,
         Failed,
+        EndProcess,
     }
 }
