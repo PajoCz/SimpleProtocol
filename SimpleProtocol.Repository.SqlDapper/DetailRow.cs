@@ -13,7 +13,7 @@ namespace SimpleProtocol.Repository.SqlDapper
         public long HeaderId { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedLogin { get; set; }
-        public int Status { get; set; }
+        public int StatusId { get; set; }
         public string Text { get; set; }
 
         public ProtocolDetail ToProtocolDetail()
@@ -22,7 +22,7 @@ namespace SimpleProtocol.Repository.SqlDapper
             {
                 CreatedDate = CreatedDate,
                 CreatedLogin = CreatedLogin,
-                Status = (ProtocolStatus) Status,
+                Status = (ProtocolStatus) StatusId,
                 Text = Text,
             };
         }
