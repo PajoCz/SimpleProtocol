@@ -35,11 +35,11 @@ namespace SimpleProtocol.Repository.SqlDapper.Test
             var writeEngine = new ProtocolWriteEngine(new DateTimeDefaultImpl(),
                 new ProtocolWriteRepositorySqlDapper(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString));
             writeEngine.StartUniqueLinkedObject(new HeaderEntityWrite() { HeaderName = "HeaderForObject1", Login = "CreatedFromLoginX"}, linkedObject);
-            writeEngine.AddDetail(new DetailEntityWrite { Status = ProtocolStatus.Ok, Text = "Detail text 1" });
+            writeEngine.AddDetail(new DetailEntityWrite { Login = "LoginDetail1", Status = ProtocolStatus.Ok, Text = "Detail text 1" });
             writeEngine.Stop();
 
             writeEngine.StartUniqueLinkedObject(new HeaderEntityWrite() { HeaderName = "HeaderForObject1NextCall", Login = "CreatedFromLoginXNextCall" }, linkedObject);
-            writeEngine.AddDetail(new DetailEntityWrite { Status = ProtocolStatus.Ok, Text = "Detail text 2" });
+            writeEngine.AddDetail(new DetailEntityWrite { Login = "LoginDetail2", Status = ProtocolStatus.Ok, Text = "Detail text 2" });
             writeEngine.Stop();
 
             var readEngine = new ProtocolReadEngine(new ProtocolReadRepositorySqlDapper(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString));
@@ -61,6 +61,11 @@ namespace SimpleProtocol.Repository.SqlDapper.Test
             Assert.AreEqual(null, found.First().Details.ToList()[1].Text);
             Assert.AreEqual("Detail text 2", found.First().Details.ToList()[2].Text);
             Assert.AreEqual(null, found.First().Details.ToList()[3].Text);
+
+            Assert.AreEqual("LoginDetail1", found.First().Details.ToList()[0].CreatedLogin);
+            Assert.AreEqual(null, found.First().Details.ToList()[1].CreatedLogin);
+            Assert.AreEqual("LoginDetail2", found.First().Details.ToList()[2].CreatedLogin);
+            Assert.AreEqual(null, found.First().Details.ToList()[3].CreatedLogin);
         }
     }
 }

@@ -62,7 +62,7 @@ namespace SimpleProtocol.Repository.SqlDapper
             using (var conn = new SqlConnection(_ConnectionString))
             {
                 conn.Open();
-                conn.Insert(new DetailRow {HeaderId = p_HeaderId, CreatedDate = p_DateTimeNow, Status = (int) p_DetailEntityWrite.Status, Text = p_DetailEntityWrite.Text});
+                conn.Insert(new DetailRow {HeaderId = p_HeaderId, CreatedDate = p_DateTimeNow, CreatedLogin = p_DetailEntityWrite.Login, Status = (int) p_DetailEntityWrite.Status, Text = p_DetailEntityWrite.Text});
             }
         }
 
