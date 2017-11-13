@@ -36,7 +36,11 @@
     <Reference Include="Dapper.Contrib, Version=1.50.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.Contrib.1.50.0\lib\net45\Dapper.Contrib.dll</HintPath>
     </Reference>
+    <Reference Include="MicroOrm.Dapper.Repositories, Version=1.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicroOrm.Dapper.Repositories.1.8.3\lib\net45\MicroOrm.Dapper.Repositories.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
@@ -51,6 +55,7 @@
     <Compile Include="DetailRow.cs" />
     <Compile Include="HeaderRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtocolReadRepositorySqlDapper.cs" />
     <Compile Include="ProtocolWriteRepositorySqlDapper.cs" />
   </ItemGroup>
   <ItemGroup>

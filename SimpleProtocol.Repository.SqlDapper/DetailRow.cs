@@ -1,5 +1,7 @@
 ﻿using System;
 using Dapper.Contrib.Extensions;
+using SimpleProtocol.Contract;
+using SimpleProtocol.Contract.Read;
 
 namespace SimpleProtocol.Repository.SqlDapper
 {
@@ -12,5 +14,15 @@ namespace SimpleProtocol.Repository.SqlDapper
         public DateTime CreatedDate { get; set; }
         public int Status { get; set; }
         public string Text { get; set; }
+
+        public ProtocolDetail ToProtocolDetail()
+        {
+            return new ProtocolDetail()
+            {
+                CreatedDate = CreatedDate,
+                Status = (ProtocolStatus) Status,
+                Text = Text,
+            };
+        }
     }
 }

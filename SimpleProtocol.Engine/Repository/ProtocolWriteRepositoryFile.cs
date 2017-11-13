@@ -7,7 +7,7 @@ using SimpleProtocol.Engine.Extensions;
 namespace SimpleProtocol.Engine.Repository
 {
 
-    public class ProtocolWriteRepositoryFile : IProtocolWriteRepository<long, long>
+    public class ProtocolWriteRepositoryFile : IProtocolWriteRepository<long>
     {
         private readonly string _FileNamePattern;
         private readonly Random _Random = new Random();
@@ -31,13 +31,16 @@ namespace SimpleProtocol.Engine.Repository
             return headerId;
         }
 
-        public long AddDetail(long p_HeaderId, DateTime p_DateTimeNow, DetailEntityWrite p_DetailEntityWrite)
+        public long StartUniqueLinkedObject(DateTime p_DateTimeNow, HeaderEntityWrite p_HeaderEntityWrite, LinkedObject p_LinkedObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddDetail(long p_HeaderId, DateTime p_DateTimeNow, DetailEntityWrite p_DetailEntityWrite)
         {
             if (p_DetailEntityWrite == null) throw new ArgumentNullException(nameof(p_DetailEntityWrite));
 
-            long result = _Random.NextLong();
             SaveLineWithDateTimePrefix(p_HeaderId, $"Detail [{p_DetailEntityWrite.Status}]: {p_DetailEntityWrite.Text}", p_DateTimeNow);
-            return result;
         }
 
         public void Stop(long p_HeaderId, DateTime p_DateTimeNow)

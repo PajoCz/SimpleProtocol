@@ -28,7 +28,7 @@ namespace SimpleProtocol.Engine.Test
             }
         }
 
-        private static IProtocolWriteEngine<long, long> ProtocolWriteEngineWithRepositoryFile()
+        private static IProtocolWriteEngine<long> ProtocolWriteEngineWithRepositoryFile()
         {
             string dt = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss-ffffff");
             var writeEngine = new ProtocolWriteEngine(new DateTimeDefaultImpl(), new ProtocolWriteRepositoryFile(

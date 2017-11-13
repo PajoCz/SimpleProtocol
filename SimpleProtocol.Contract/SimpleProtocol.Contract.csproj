@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Read\IProtocolReadEngine.cs" />
+    <Compile Include="Read\IProtocolReadRepository.cs" />
     <Compile Include="Read\ProtocolDetail.cs" />
     <Compile Include="Read\ProtocolHeader.cs" />
     <Compile Include="Write\DetailEntityWrite.cs" />

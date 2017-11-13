@@ -2,11 +2,11 @@
 
 namespace SimpleProtocol.Engine.Write
 {
-    public class ProtocolWriteEngineAutoStartStop<THeaderId, TDetailId> : IProtocolWriteEngineAutoStartStop
+    public class ProtocolWriteEngineAutoStartStop<THeaderId> : IProtocolWriteEngineAutoStartStop
     {
-        private readonly IProtocolWriteEngine<THeaderId, TDetailId> _Owner;
+        private readonly IProtocolWriteEngine<THeaderId> _Owner;
 
-        public ProtocolWriteEngineAutoStartStop(IProtocolWriteEngine<THeaderId, TDetailId> p_Owner, HeaderEntityWrite p_HeaderEntityWrite)
+        public ProtocolWriteEngineAutoStartStop(IProtocolWriteEngine<THeaderId> p_Owner, HeaderEntityWrite p_HeaderEntityWrite)
         {
             _Owner = p_Owner;
             _Owner.Start(p_HeaderEntityWrite);
