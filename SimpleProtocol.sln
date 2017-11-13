@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleProtocol.Repository.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleProtocol.Repository.SqlDapper.Test", "SimpleProtocol.Repository.SqlDapper.Test\SimpleProtocol.Repository.SqlDapper.Test.csproj", "{D2409330-AB15-4FF3-87CC-63233FC3714D}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SimpleProtocol.Sql", "SimpleProtocol.Sql\SimpleProtocol.Sql.sqlproj", "{A1D4900C-CFF0-4228-A7F8-7A8DBA6473C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,12 @@ Global
 		{D2409330-AB15-4FF3-87CC-63233FC3714D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2409330-AB15-4FF3-87CC-63233FC3714D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2409330-AB15-4FF3-87CC-63233FC3714D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1D4900C-CFF0-4228-A7F8-7A8DBA6473C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1D4900C-CFF0-4228-A7F8-7A8DBA6473C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1D4900C-CFF0-4228-A7F8-7A8DBA6473C2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A1D4900C-CFF0-4228-A7F8-7A8DBA6473C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D4900C-CFF0-4228-A7F8-7A8DBA6473C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1D4900C-CFF0-4228-A7F8-7A8DBA6473C2}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
