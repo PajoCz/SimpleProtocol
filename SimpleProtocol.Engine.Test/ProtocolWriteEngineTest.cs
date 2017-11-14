@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SimpleProtocol.Contract;
 using SimpleProtocol.Contract.Write;
 
 namespace SimpleProtocol.Engine.Test
@@ -10,7 +11,7 @@ namespace SimpleProtocol.Engine.Test
         public void Created_WithoutStart_CalledAddDetail_CalledAddLinkedObject_ThrowsException()
         {
             var writeEngine = ProtocolWriteEngineHelper.ProtocolWriteEngineWithRepositoryMock();
-            Assert.Throws<ProtocolWriteEngineInnerStateException>(() => writeEngine.AddDetail(null));
+            Assert.Throws<ProtocolWriteEngineInnerStateException>(() => writeEngine.AddDetail(ProtocolStatus.Ok, null));
             Assert.Throws<ProtocolWriteEngineInnerStateException>(() => writeEngine.AddLinkedObject(null));
         }
 
@@ -30,7 +31,7 @@ namespace SimpleProtocol.Engine.Test
         {
             var writeEngine = ProtocolWriteEngineHelper.ProtocolWriteEngineWithRepositoryMock();
             writeEngine.Start(null);
-            writeEngine.AddDetail(null);
+            writeEngine.AddDetail(ProtocolStatus.Ok, null);
             writeEngine.AddLinkedObject(null);
             writeEngine.Stop();
         }

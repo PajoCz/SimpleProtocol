@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SimpleProtocol.Repository.SqlDapper</id>
+    <version>2.0.0</version>
+    <authors>pbalas</authors>
+    <owners>pbalas</owners>
+    <licenseUrl>https://github.com/PajoCz/RuleEvaluator/blob/master/licence.txt</licenseUrl>
+    <projectUrl>https://github.com/PajoCz/RuleEvaluator</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>SimpleProtocol</description>
+    <copyright>Copyright 2017 Pavel Balas</copyright>
+    <tags>Simple Protocol</tags>
+    <dependencies>
+      <group targetFramework="net461">
+        <dependency id="SimpleProtocol.Engine" version="2.0.0" />
+        <dependency id="Dapper" version="1.50.2" />
+        <dependency id="Dapper.Contrib" version="1.50.0" />
+        <dependency id="MicroOrm.Dapper.Repositories" version="1.8.3" />
+      </group>
+    </dependencies>
+  </metadata>
+
+  <files>
+    <file src="SimpleProtocol.Repository.SqlDapper.Test\bin\Debug\SimpleProtocol.Repository.SqlDapper.dll" target="lib\net461"/>
+    <file src="SimpleProtocol.Repository.SqlDapper.Test\bin\Debug\SimpleProtocol.Repository.SqlDapper.pdb" target="lib\net461"/>
+  </files>
+</package>

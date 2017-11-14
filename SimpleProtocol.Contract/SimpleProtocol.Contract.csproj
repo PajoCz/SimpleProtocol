@@ -40,16 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ILogin.cs" />
     <Compile Include="Read\IProtocolReadEngine.cs" />
     <Compile Include="Read\IProtocolReadRepository.cs" />
     <Compile Include="Read\ProtocolDetail.cs" />
     <Compile Include="Read\ProtocolHeader.cs" />
-    <Compile Include="Write\DetailEntityWrite.cs" />
     <Compile Include="Extensions\ProtocolStatusExtensions.cs" />
-    <Compile Include="Write\HeaderEntityWrite.cs" />
     <Compile Include="IDateTime.cs" />
     <Compile Include="Write\IProtocolWriteEngine.cs" />
     <Compile Include="Write\IProtocolWriteEngineAutoStartStop.cs" />
+    <Compile Include="Write\IProtocolWriteEngineFactory.cs" />
     <Compile Include="Write\IProtocolWriteRepository.cs" />
     <Compile Include="LinkedObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

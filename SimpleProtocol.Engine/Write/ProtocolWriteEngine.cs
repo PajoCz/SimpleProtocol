@@ -8,61 +8,67 @@ namespace SimpleProtocol.Engine.Write
     ///     Has InnerState - must be unique instance for every call / thread
     ///     For more comfort using Start / Stop may be used ProtocolWriteEngineAutoStartStop
     /// </summary>
-    public class ProtocolWriteEngine : IProtocolWriteEngine<long>
+    public class ProtocolWriteEngine<THeaderId> : IProtocolWriteEngine<THeaderId>
     {
         #region Injected dependencies
 
         private readonly IDateTime _DateTime;
-        private readonly IProtocolWriteRepository<long> _ProtocolWriteRepository;
+        private readonly ILogin _Login;
+        private readonly IProtocolWriteRepository<THeaderId> _ProtocolWriteRepository;
 
         #endregion
 
-        public ProtocolWriteEngine(IDateTime p_DateTime, IProtocolWriteRepository<long> p_ProtocolWriteRepository)
+        public ProtocolWriteEngine(IDateTime p_DateTime, ILogin p_Login, IProtocolWriteRepository<THeaderId> p_ProtocolWriteRepository)
         {
             _DateTime = p_DateTime;
+            _Login = p_Login;
             _ProtocolWriteRepository = p_ProtocolWriteRepository;
         }
 
         #region Object states
 
-        public long HeaderId { get; private set; }
+        public THeaderId HeaderId { get; private set; }
         public ProtocolWriteEngineInnerState InnerState { get; private set; }
+        public string Login { get; set; }
 
         #endregion
 
-        public IProtocolWriteEngineAutoStartStop CreateAutoStartStop(HeaderEntityWrite p_HeaderEntityWrite)
+        public IProtocolWriteEngineAutoStartStop CreateAutoStartStop(string p_HeaderName)
         {
-            return new ProtocolWriteEngineAutoStartStop<long>(this, p_HeaderEntityWrite);
+            return new ProtocolWriteEngineAutoStartStop<THeaderId>(this, p_HeaderName);
         }
-
 
         #region Write methods
 
-        public long Start(HeaderEntityWrite p_HeaderEntityWrite)
+        public THeaderId Start(string p_HeaderName, LinkedObject p_LinkedObject = null)
         {
             if (InnerState == ProtocolWriteEngineInnerState.Started)
                 throw new ProtocolWriteEngineInnerStateException(
                     $"InnerState is {InnerState}, but must be {ProtocolWriteEngineInnerState.Created} / {ProtocolWriteEngineInnerState.Stopped}");
             InnerState = ProtocolWriteEngineInnerState.Started;
-            HeaderId = _ProtocolWriteRepository.Start(_DateTime.Now, p_HeaderEntityWrite);
+            HeaderId = _ProtocolWriteRepository.Start(_DateTime.Now, _Login.Login, p_HeaderName);
+            if (p_LinkedObject != null)
+            {
+                _ProtocolWriteRepository.AddLinkedObject(HeaderId, p_LinkedObject);
+            }
             return HeaderId;
         }
 
-        public long StartUniqueLinkedObject(HeaderEntityWrite p_HeaderEntityWrite, LinkedObject p_LinkedObject)
+        public THeaderId StartUniqueLinkedObject(string p_HeaderName, LinkedObject p_LinkedObject)
         {
             if (InnerState == ProtocolWriteEngineInnerState.Started)
                 throw new ProtocolWriteEngineInnerStateException(
                     $"InnerState is {InnerState}, but must be {ProtocolWriteEngineInnerState.Created} / {ProtocolWriteEngineInnerState.Stopped}");
             InnerState = ProtocolWriteEngineInnerState.Started;
-            HeaderId = _ProtocolWriteRepository.StartUniqueLinkedObject(_DateTime.Now, p_HeaderEntityWrite, p_LinkedObject);
+            HeaderId = _ProtocolWriteRepository.StartUniqueLinkedObject(_DateTime.Now, _Login.Login, p_HeaderName, p_LinkedObject);
             return HeaderId;
         }
 
-        public void AddDetail(DetailEntityWrite p_DetailEntityWrite)
+        public void AddDetail(ProtocolStatus p_Status, string p_Text)
         {
             if (InnerState != ProtocolWriteEngineInnerState.Started)
                 throw new ProtocolWriteEngineInnerStateException($"InnerState is {InnerState}, but must be {ProtocolWriteEngineInnerState.Started}");
-            _ProtocolWriteRepository.AddDetail(HeaderId, _DateTime.Now, p_DetailEntityWrite);
+            _ProtocolWriteRepository.AddDetail(HeaderId, _DateTime.Now, p_Status, p_Text);
         }
 
         public void AddLinkedObject(LinkedObject p_LinkedObject)

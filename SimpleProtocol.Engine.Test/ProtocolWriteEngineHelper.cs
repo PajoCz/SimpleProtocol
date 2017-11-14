@@ -9,7 +9,7 @@ namespace SimpleProtocol.Engine.Test
         public static IProtocolWriteEngine<long> ProtocolWriteEngineWithRepositoryMock()
         {
             var protocolWriteRepositoryMock = new Mock<IProtocolWriteRepository<long>>().Object;
-            var writeEngine = new ProtocolWriteEngine(new DateTimeDefaultImpl(), protocolWriteRepositoryMock);
+            var writeEngine = new ProtocolWriteEngine<long>(new DateTimeDefaultImpl(), new LoginNullImpl(), protocolWriteRepositoryMock);
             return writeEngine;
         }
     }

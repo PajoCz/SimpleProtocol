@@ -2,7 +2,6 @@
     [DetailId]     BIGINT         IDENTITY (1, 1) NOT NULL,
     [HeaderId]     BIGINT         NOT NULL,
     [CreatedDate]  DATETIME       NOT NULL,
-    [CreatedLogin] NVARCHAR (50)  NULL,
     [StatusId]     INT            NOT NULL,
     [Text]         NVARCHAR (MAX) NULL,
     CONSTRAINT [PK_Detail] PRIMARY KEY CLUSTERED ([DetailId] ASC),

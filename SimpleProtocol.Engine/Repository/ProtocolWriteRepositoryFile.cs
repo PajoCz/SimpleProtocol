@@ -22,25 +22,21 @@ namespace SimpleProtocol.Engine.Repository
             _FileNamePattern = p_FileNamePattern;
         }
 
-        public long Start(DateTime p_DateTimeNow, HeaderEntityWrite p_HeaderEntityWrite)
+        public long Start(DateTime p_DateTimeNow, string p_Login, string p_HeaderName)
         {
-            if (p_HeaderEntityWrite == null) throw new ArgumentNullException(nameof(p_HeaderEntityWrite));
-
             var headerId = _Random.NextLong();
-            SaveLineWithDateTimePrefix(headerId, $"BEGIN [login={p_HeaderEntityWrite.Login}]: Name='{p_HeaderEntityWrite.HeaderName}'", p_DateTimeNow);
+            SaveLineWithDateTimePrefix(headerId, $"BEGIN [login={p_Login}]: Name='{p_HeaderName}'", p_DateTimeNow);
             return headerId;
         }
 
-        public long StartUniqueLinkedObject(DateTime p_DateTimeNow, HeaderEntityWrite p_HeaderEntityWrite, LinkedObject p_LinkedObject)
+        public long StartUniqueLinkedObject(DateTime p_DateTimeNow, string p_Login, string p_HeaderName, LinkedObject p_LinkedObject)
         {
             throw new NotImplementedException();
         }
 
-        public void AddDetail(long p_HeaderId, DateTime p_DateTimeNow, DetailEntityWrite p_DetailEntityWrite)
+        public void AddDetail(long p_HeaderId, DateTime p_DateTimeNow, ProtocolStatus p_Status, string p_Text)
         {
-            if (p_DetailEntityWrite == null) throw new ArgumentNullException(nameof(p_DetailEntityWrite));
-
-            SaveLineWithDateTimePrefix(p_HeaderId, $"Detail [{p_DetailEntityWrite.Status}]: {p_DetailEntityWrite.Text}", p_DateTimeNow);
+            SaveLineWithDateTimePrefix(p_HeaderId, $"Detail [{p_Status}]: {p_Text}", p_DateTimeNow);
         }
 
         public void Stop(long p_HeaderId, DateTime p_DateTimeNow)

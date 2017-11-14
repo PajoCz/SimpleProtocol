@@ -14,16 +14,16 @@ namespace SimpleProtocol.Engine.Test
         public void Start_AddDetail_Stop()
         {
             var writeEngine = ProtocolWriteEngineWithRepositoryFile();
-            using (writeEngine.CreateAutoStartStop(new HeaderEntityWrite() { Login = "login1", HeaderName = "Test protocol 1" }))
+            using (writeEngine.CreateAutoStartStop("Test protocol 1"))
             {
-                writeEngine.AddDetail(new DetailEntityWrite() {Status = ProtocolStatus.Ok, Text = "Detail1 text"});
-                writeEngine.AddDetail(new DetailEntityWrite() { Status = ProtocolStatus.Error, Text = "Detail2 text" });
+                writeEngine.AddDetail(ProtocolStatus.Ok, "Detail1 text");
+                writeEngine.AddDetail(ProtocolStatus.Error, "Detail2 text");
                 writeEngine.AddLinkedObject(new LinkedObject() {ObjectName = "EntityNameXYZ", ObjectId = "EntityId1"});
             }
-            using (writeEngine.CreateAutoStartStop(new HeaderEntityWrite() { Login = "login1", HeaderName = "Test protocol 2" }))
+            using (writeEngine.CreateAutoStartStop("Test protocol 2"))
             {
-                writeEngine.AddDetail(new DetailEntityWrite() { Status = ProtocolStatus.Ok, Text = "Detail1 text" });
-                writeEngine.AddDetail(new DetailEntityWrite() { Status = ProtocolStatus.Warning, Text = "Detail2 text" });
+                writeEngine.AddDetail(ProtocolStatus.Ok, "Detail1 text");
+                writeEngine.AddDetail(ProtocolStatus.Warning, "Detail2 text");
                 writeEngine.AddLinkedObject(new LinkedObject() { ObjectName = "EntityNameXYZ", ObjectId = "EntityId2" });
             }
         }
@@ -31,7 +31,7 @@ namespace SimpleProtocol.Engine.Test
         private static IProtocolWriteEngine<long> ProtocolWriteEngineWithRepositoryFile()
         {
             string dt = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss-ffffff");
-            var writeEngine = new ProtocolWriteEngine(new DateTimeDefaultImpl(), new ProtocolWriteRepositoryFile(
+            var writeEngine = new ProtocolWriteEngine<long>(new DateTimeDefaultImpl(), new LoginNullImpl(), new ProtocolWriteRepositoryFile(
                 "D:\\protocol " + dt + " HeaderId{0}.txt"));
             return writeEngine;
         }

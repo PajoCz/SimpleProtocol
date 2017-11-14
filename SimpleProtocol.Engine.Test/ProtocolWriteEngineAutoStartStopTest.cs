@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SimpleProtocol.Contract;
 using SimpleProtocol.Contract.Write;
 
 namespace SimpleProtocol.Engine.Test
@@ -14,7 +15,7 @@ namespace SimpleProtocol.Engine.Test
             using (writeEngine.CreateAutoStartStop(null))
             {
                 Assert.AreEqual(ProtocolWriteEngineInnerState.Started, writeEngine.InnerState);
-                writeEngine.AddDetail(null);
+                writeEngine.AddDetail(ProtocolStatus.Ok, null);
             }
             Assert.AreEqual(ProtocolWriteEngineInnerState.Stopped, writeEngine.InnerState);
         }
