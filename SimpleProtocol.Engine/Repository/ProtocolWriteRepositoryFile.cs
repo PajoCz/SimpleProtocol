@@ -29,10 +29,10 @@ namespace SimpleProtocol.Engine.Repository
             return headerId;
         }
 
-        public long StartUniqueLinkedObject(DateTime p_DateTimeNow, string p_Login, string p_HeaderName, LinkedObject p_LinkedObject)
-        {
-            throw new NotImplementedException();
-        }
+        //public long StartUniqueLinkedObject(DateTime p_DateTimeNow, string p_Login, string p_HeaderName, LinkedObject p_LinkedObject)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void AddDetail(long p_HeaderId, DateTime p_DateTimeNow, ProtocolStatus p_Status, string p_Text)
         {

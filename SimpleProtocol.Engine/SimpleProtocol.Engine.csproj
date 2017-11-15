@@ -42,13 +42,12 @@
   <ItemGroup>
     <Compile Include="DateTimeDefaultImpl.cs" />
     <Compile Include="LoginNullImpl.cs" />
-    <Compile Include="Read\ProtocolReadEngine.cs" />
+    <Compile Include="Read\ProtocolReadHeader.cs" />
     <Compile Include="Repository\ProtocolWriteRepositoryFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />
-    <Compile Include="Write\ProtocolWriteEngine.cs" />
-    <Compile Include="Write\ProtocolWriteEngineAutoStartStop.cs" />
-    <Compile Include="Write\ProtocolWriteEngineFactory.cs" />
+    <Compile Include="Write\ProtocolWriteHeader.cs" />
+    <Compile Include="Write\ProtocolWriteHeaderFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleProtocol.Contract\SimpleProtocol.Contract.csproj">

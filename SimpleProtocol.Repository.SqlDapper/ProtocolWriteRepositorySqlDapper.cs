@@ -26,36 +26,36 @@ namespace SimpleProtocol.Repository.SqlDapper
             }
         }
 
-        public long StartUniqueLinkedObject(DateTime p_DateTimeNow, string p_Login, string p_HeaderName, LinkedObject p_LinkedObject)
-        {
-            using (var conn = new SqlConnection(_ConnectionString))
-            {
-                conn.Open();
+        //public long StartUniqueLinkedObject(DateTime p_DateTimeNow, string p_Login, string p_HeaderName, LinkedObject p_LinkedObject)
+        //{
+        //    using (var conn = new SqlConnection(_ConnectionString))
+        //    {
+        //        conn.Open();
 
-                //Posibility 1 : By T-SQL
-                var found = conn.Query<long>("SELECT HeaderId FROM SimpleProtocol.LinkedObject WHERE Name=@Name AND Id=@Id",
-                    new { Name = p_LinkedObject.ObjectName, Id = p_LinkedObject.ObjectId }).ToList();
+        //        //Posibility 1 : By T-SQL
+        //        var found = conn.Query<long>("SELECT HeaderId FROM SimpleProtocol.LinkedObject WHERE Name=@Name AND Id=@Id",
+        //            new { Name = p_LinkedObject.ObjectName, Id = p_LinkedObject.ObjectId }).ToList();
 
-                //Posibility 2 : By Linq (by nuget package 'MicroOrm.Dapper.Repositories')
-                //var repo = new DapperRepository<LinkedObjectRow>(conn);
-                //var found = repo.FindAll(i => i.Name == p_LinkedObject.ObjectName && i.Id == p_LinkedObject.ObjectId.ToString()).ToList();
+        //        //Posibility 2 : By Linq (by nuget package 'MicroOrm.Dapper.Repositories')
+        //        //var repo = new DapperRepository<LinkedObjectRow>(conn);
+        //        //var found = repo.FindAll(i => i.Name == p_LinkedObject.ObjectName && i.Id == p_LinkedObject.ObjectId.ToString()).ToList();
 
-                if (found.Count > 1)
-                {
-                    throw new Exception($"More HeaderId found in LinkedObject with Name={p_LinkedObject.ObjectName} AND Id={p_LinkedObject.ObjectId}");
-                }
+        //        if (found.Count > 1)
+        //        {
+        //            throw new Exception($"More HeaderId found in LinkedObject with Name={p_LinkedObject.ObjectName} AND Id={p_LinkedObject.ObjectId}");
+        //        }
 
-                if (found.Count == 1)
-                {
-                    return found.FirstOrDefault();
-                }
+        //        if (found.Count == 1)
+        //        {
+        //            return found.FirstOrDefault();
+        //        }
 
-                //create new with linked object
-                var result = conn.Insert(new HeaderRow { CreatedDate = p_DateTimeNow, CreatedLogin = p_Login, Name = p_HeaderName });
-                conn.Insert(new LinkedObjectRow() { HeaderId = result, Name = p_LinkedObject.ObjectName, Id = p_LinkedObject.ObjectId.ToString() });
-                return result;
-            }
-        }
+        //        //create new with linked object
+        //        var result = conn.Insert(new HeaderRow { CreatedDate = p_DateTimeNow, CreatedLogin = p_Login, Name = p_HeaderName });
+        //        conn.Insert(new LinkedObjectRow() { HeaderId = result, Name = p_LinkedObject.ObjectName, Id = p_LinkedObject.ObjectId.ToString() });
+        //        return result;
+        //    }
+        //}
 
         public void AddDetail(long p_HeaderId, DateTime p_DateTimeNow, ProtocolStatus p_Status, string p_Text)
         {

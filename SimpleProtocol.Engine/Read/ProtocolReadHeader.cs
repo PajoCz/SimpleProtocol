@@ -4,11 +4,11 @@ using SimpleProtocol.Contract.Read;
 
 namespace SimpleProtocol.Engine.Read
 {
-    public class ProtocolReadEngine : IProtocolReadEngine<long>
+    public class ProtocolReadHeader : IProtocolReadHeader<long>
     {
         private readonly IProtocolReadRepository<long> _ProtocolReadRepository;
 
-        public ProtocolReadEngine(IProtocolReadRepository<long> p_ProtocolReadRepository)
+        public ProtocolReadHeader(IProtocolReadRepository<long> p_ProtocolReadRepository)
         {
             _ProtocolReadRepository = p_ProtocolReadRepository;
         }

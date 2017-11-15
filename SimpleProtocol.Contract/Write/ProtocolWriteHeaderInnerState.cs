@@ -1,6 +1,6 @@
 ﻿namespace SimpleProtocol.Contract.Write
 {
-    public enum ProtocolWriteEngineInnerState
+    public enum ProtocolWriteHeaderInnerState
     {
         Created,
         Started,

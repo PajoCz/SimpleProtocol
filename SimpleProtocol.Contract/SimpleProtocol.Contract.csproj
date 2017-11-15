@@ -41,21 +41,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ILogin.cs" />
-    <Compile Include="Read\IProtocolReadEngine.cs" />
+    <Compile Include="Read\IProtocolReadHeader.cs" />
     <Compile Include="Read\IProtocolReadRepository.cs" />
     <Compile Include="Read\ProtocolDetail.cs" />
     <Compile Include="Read\ProtocolHeader.cs" />
     <Compile Include="Extensions\ProtocolStatusExtensions.cs" />
     <Compile Include="IDateTime.cs" />
-    <Compile Include="Write\IProtocolWriteEngine.cs" />
-    <Compile Include="Write\IProtocolWriteEngineAutoStartStop.cs" />
-    <Compile Include="Write\IProtocolWriteEngineFactory.cs" />
+    <Compile Include="Write\IProtocolWriteHeader.cs" />
+    <Compile Include="Write\IProtocolWriteHeaderFactory.cs" />
     <Compile Include="Write\IProtocolWriteRepository.cs" />
     <Compile Include="LinkedObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtocolStatus.cs" />
-    <Compile Include="Write\ProtocolWriteEngineInnerState.cs" />
-    <Compile Include="Write\ProtocolWriteEngineInnerStateException.cs" />
+    <Compile Include="Write\ProtocolWriteHeaderInnerState.cs" />
+    <Compile Include="Write\ProtocolWriteHeaderInnerStateException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

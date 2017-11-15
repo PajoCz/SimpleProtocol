@@ -52,10 +52,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtocolStatusTest.cs" />
-    <Compile Include="ProtocolWriteEngineAutoStartStopTest.cs" />
-    <Compile Include="ProtocolWriteEngineHelper.cs" />
-    <Compile Include="ProtocolWriteEngineTest.cs" />
-    <Compile Include="ProtocolWriteEngineWithRepositoryFileTest.cs" />
+    <Compile Include="ProtocolWriteHeaderFactoryHelper.cs" />
+    <Compile Include="ProtocolWriteHeaderTest.cs" />
+    <Compile Include="ProtocolWriteHeaderWithRepositoryFileTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleProtocol.Contract\SimpleProtocol.Contract.csproj">

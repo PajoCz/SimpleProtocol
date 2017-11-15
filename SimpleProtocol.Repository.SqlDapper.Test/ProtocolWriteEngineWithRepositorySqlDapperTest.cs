@@ -11,56 +11,62 @@ using SimpleProtocol.Engine.Write;
 namespace SimpleProtocol.Repository.SqlDapper.Test
 {
     [TestFixture]
-    public class ProtocolWriteEngineWithRepositorySqlDapperTest
+    public class ProtocolWriteHeaderWithRepositorySqlDapperTest
     {
         [Test]
-        public void WriteEngine_CreateAutoStartStop_MoreAddDetails_MoreAddLinkedObject()
+        public void WriteHeader_Create_MoreAddDetails_MoreAddLinkedObject()
         {
-            var engine = new ProtocolWriteEngine<long>(new DateTimeDefaultImpl(), new LoginNullImpl(),
+            var writeHeaderFactory = new ProtocolWriteHeaderFactory<long>(new DateTimeDefaultImpl(), new LoginNullImpl("CreatedFromLoginX"),
                 new ProtocolWriteRepositorySqlDapper(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString));
-            using (engine.CreateAutoStartStop("HeaderName1"))
+            using (var writeHeader = writeHeaderFactory.Create("HeaderName1"))
             {
-                engine.AddDetail(ProtocolStatus.Ok, "Detail text 1");
-                engine.AddDetail(ProtocolStatus.Warning, "Detail text 2");
-                engine.AddLinkedObject(new LinkedObject {ObjectName = "ObjectNameOfTypeInt", ObjectId = 12});
-                engine.AddLinkedObject(new LinkedObject {ObjectName = "ObjectNameOfTypeString", ObjectId = "12a"});
+                writeHeader.AddDetail(ProtocolStatus.Ok, "Detail text 1");
+                writeHeader.AddDetail(ProtocolStatus.Warning, "Detail text 2");
+                writeHeader.AddLinkedObject(new LinkedObject {ObjectName = "ObjectNameOfTypeInt", ObjectId = 12});
+                writeHeader.AddLinkedObject(new LinkedObject {ObjectName = "ObjectNameOfTypeString", ObjectId = "12a"});
             }
         }
 
         [Test]
-        public void WriteEngine_StartUniqueLinkedObject_FirstCallCreateHeader_SecondCallAddDetailsToSameHeader_CheckDataByReadEngine()
+        public void WriteHeader_CreateAutoStop_CheckDataByReadHeader()
         {
-            var linkedObject = new LinkedObject() {ObjectName = "ObjectName1", ObjectId = "ObjectId" + new Random().Next()};
+            var linkedObject = new LinkedObject() { ObjectName = "ObjectName1", ObjectId = "ObjectId" + new Random().Next() };
 
-            var writeEngine = new ProtocolWriteEngine<long>(new DateTimeDefaultImpl(), new LoginNullImpl("CreatedFromLoginX"), 
+            var writeHeaderFactory = new ProtocolWriteHeaderFactory<long>(new DateTimeDefaultImpl(), new LoginNullImpl("CreatedFromLoginX"),
                 new ProtocolWriteRepositorySqlDapper(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString));
-            writeEngine.StartUniqueLinkedObject("HeaderForObject1", linkedObject);
-            writeEngine.AddDetail(ProtocolStatus.Ok, "Detail text 1");
-            writeEngine.Stop();
+            using (var writeHeader = writeHeaderFactory.CreateAutoStop("HeaderForObject1", linkedObject))
+            {
+                writeHeader.AddDetail(ProtocolStatus.Ok, "Detail text 1");
+            }
 
-            writeEngine.StartUniqueLinkedObject("HeaderForObject1NextCall", linkedObject);
-            writeEngine.AddDetail(ProtocolStatus.Ok, "Detail text 2");
-            writeEngine.Stop();
+            using (var writeHeader = writeHeaderFactory.CreateAutoStop("HeaderForObject1NextCall", linkedObject))
+            {
+                writeHeader.AddDetail(ProtocolStatus.Ok, "Detail text 2");
+            }
 
-            var readEngine = new ProtocolReadEngine(new ProtocolReadRepositorySqlDapper(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString));
-            var found = readEngine.FindByLinkedObject(linkedObject, true).ToList();
+            var readHeader = new ProtocolReadHeader(new ProtocolReadRepositorySqlDapper(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString));
+            var found = readHeader.FindByLinkedObject(linkedObject, true).ToList();
 
             //ASSERT
-            Assert.AreEqual(1, found.Count);
+            Assert.AreEqual(2, found.Count);
+
+            //first header
             Assert.AreEqual("HeaderForObject1", found.First().Name);
             Assert.AreEqual("CreatedFromLoginX", found.First().CreatedLogin);
-            Assert.AreEqual(4, found.First().Details.Count());
-            
-            //check detail properties
+            Assert.AreEqual(2, found.First().Details.Count());
             Assert.AreEqual(ProtocolStatus.Ok, found.First().Details.ToList()[0].Status);
             Assert.AreEqual(ProtocolStatus.EndProcess, found.First().Details.ToList()[1].Status);
-            Assert.AreEqual(ProtocolStatus.Ok, found.First().Details.ToList()[2].Status);
-            Assert.AreEqual(ProtocolStatus.EndProcess, found.First().Details.ToList()[3].Status);
-
             Assert.AreEqual("Detail text 1", found.First().Details.ToList()[0].Text);
             Assert.AreEqual(null, found.First().Details.ToList()[1].Text);
-            Assert.AreEqual("Detail text 2", found.First().Details.ToList()[2].Text);
-            Assert.AreEqual(null, found.First().Details.ToList()[3].Text);
+
+            //seconde header
+            Assert.AreEqual("HeaderForObject1NextCall", found.Last().Name);
+            Assert.AreEqual("CreatedFromLoginX", found.Last().CreatedLogin);
+            Assert.AreEqual(2, found.Last().Details.Count());
+            Assert.AreEqual(ProtocolStatus.Ok, found.Last().Details.ToList()[0].Status);
+            Assert.AreEqual(ProtocolStatus.EndProcess, found.Last().Details.ToList()[1].Status);
+            Assert.AreEqual("Detail text 2", found.Last().Details.ToList()[0].Text);
+            Assert.AreEqual(null, found.Last().Details.ToList()[1].Text);
         }
     }
 }
