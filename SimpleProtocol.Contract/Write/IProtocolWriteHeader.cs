@@ -9,8 +9,10 @@ namespace SimpleProtocol.Contract.Write
         THeaderId HeaderId { get; }
         THeaderId Start(string p_HeaderName, LinkedObject p_LinkedObject = null);
         //THeaderId StartUniqueLinkedObject(string p_HeaderName, LinkedObject p_LinkedObject);
+        DateTime? StartedTime { get; }
         void AddDetail(ProtocolStatus p_Status, string p_Text);
         void AddLinkedObject(LinkedObject p_LinkedObject);
         void Stop();
+        DateTime? StoppedTime { get; }
     }
 }

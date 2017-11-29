@@ -42,13 +42,16 @@ namespace SimpleProtocol.Engine.Write
                 throw new ProtocolWriteHeaderInnerStateException(
                     $"InnerState is {InnerState}, but must be {ProtocolWriteHeaderInnerState.Created} / {ProtocolWriteHeaderInnerState.Stopped}");
             InnerState = ProtocolWriteHeaderInnerState.Started;
-            HeaderId = _ProtocolWriteRepository.Start(_DateTime.Now, _Login.Login, p_HeaderName);
+            StartedTime = _DateTime.Now;
+            HeaderId = _ProtocolWriteRepository.Start(StartedTime.Value, _Login.Login, p_HeaderName);
             if (p_LinkedObject != null)
             {
                 _ProtocolWriteRepository.AddLinkedObject(HeaderId, p_LinkedObject);
             }
             return HeaderId;
         }
+
+        public DateTime? StartedTime { get; private set; }
 
         //public THeaderId StartUniqueLinkedObject(string p_HeaderName, LinkedObject p_LinkedObject)
         //{
@@ -79,8 +82,11 @@ namespace SimpleProtocol.Engine.Write
             if (InnerState != ProtocolWriteHeaderInnerState.Started)
                 throw new ProtocolWriteHeaderInnerStateException($"InnerState is {InnerState}, but must be {ProtocolWriteHeaderInnerState.Started}");
             InnerState = ProtocolWriteHeaderInnerState.Stopped;
-            _ProtocolWriteRepository.Stop(HeaderId, _DateTime.Now);
+            StoppedTime = _DateTime.Now;
+            _ProtocolWriteRepository.Stop(HeaderId, StoppedTime.Value);
         }
+
+        public DateTime? StoppedTime { get; private set; }
 
         #endregion
 
