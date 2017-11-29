@@ -68,7 +68,12 @@ namespace SimpleProtocol.Engine.Write
             if (InnerState != ProtocolWriteHeaderInnerState.Started)
                 throw new ProtocolWriteHeaderInnerStateException($"InnerState is {InnerState}, but must be {ProtocolWriteHeaderInnerState.Started}");
             _ProtocolWriteRepository.AddDetail(HeaderId, _DateTime.Now, p_Status, p_Text);
+            if (p_Status != ProtocolStatus.EndProcess 
+                && (WorstAddedDetailStatus == null || WorstAddedDetailStatus < p_Status))
+                WorstAddedDetailStatus = p_Status;
         }
+
+        public ProtocolStatus? WorstAddedDetailStatus { get; private set; }
 
         public void AddLinkedObject(LinkedObject p_LinkedObject)
         {

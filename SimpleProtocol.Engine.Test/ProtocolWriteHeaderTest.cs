@@ -35,5 +35,65 @@ namespace SimpleProtocol.Engine.Test
             writeHeader.AddLinkedObject(null);
             writeHeader.Stop();
         }
+
+        [Test]
+        public void WorstAddedDetailStatus_ComplexTest()
+        {
+            var writeHeader = ProtocolWriteHeaderFactoryHelper.ProtocolWriteHeaderWithRepositoryMock();
+            Assert.IsNull(writeHeader.WorstAddedDetailStatus);
+            writeHeader.Start(null);
+            Assert.IsNull(writeHeader.WorstAddedDetailStatus);
+
+            writeHeader.AddDetail(ProtocolStatus.Ok, null);
+            Assert.AreEqual(ProtocolStatus.Ok, writeHeader.WorstAddedDetailStatus);
+
+            writeHeader.AddDetail(ProtocolStatus.Warning, null);
+            Assert.AreEqual(ProtocolStatus.Warning, writeHeader.WorstAddedDetailStatus);
+
+            writeHeader.AddDetail(ProtocolStatus.Ok, null);
+            Assert.AreEqual(ProtocolStatus.Warning, writeHeader.WorstAddedDetailStatus);
+
+            writeHeader.AddDetail(ProtocolStatus.Error, null);
+            Assert.AreEqual(ProtocolStatus.Error, writeHeader.WorstAddedDetailStatus);
+
+            writeHeader.AddDetail(ProtocolStatus.Warning, null);
+            Assert.AreEqual(ProtocolStatus.Error, writeHeader.WorstAddedDetailStatus);
+
+            writeHeader.AddDetail(ProtocolStatus.Failed, null);
+            Assert.AreEqual(ProtocolStatus.Failed, writeHeader.WorstAddedDetailStatus);
+
+            writeHeader.AddDetail(ProtocolStatus.Error, null);
+            Assert.AreEqual(ProtocolStatus.Failed, writeHeader.WorstAddedDetailStatus);
+
+            //EndProcess is only for write DateTime as detail - do not modify WorstAddedDetailStatus
+            writeHeader.AddDetail(ProtocolStatus.EndProcess, null);
+            Assert.AreEqual(ProtocolStatus.Failed, writeHeader.WorstAddedDetailStatus);
+        }
+
+        [Test]
+        public void WorstAddedDetailStatus_AddDetailEndProcess_NotModifyWirstAddedDetailStatus()
+        {
+            var writeHeader = ProtocolWriteHeaderFactoryHelper.ProtocolWriteHeaderWithRepositoryMock();
+            Assert.IsNull(writeHeader.WorstAddedDetailStatus);
+            writeHeader.Start(null);
+            Assert.IsNull(writeHeader.WorstAddedDetailStatus);
+
+            //EndProcess is only for write DateTime as detail - do not modify WorstAddedDetailStatus
+            writeHeader.AddDetail(ProtocolStatus.EndProcess, null);
+            Assert.IsNull(writeHeader.WorstAddedDetailStatus);
+        }
+
+        [Test]
+        public void WorstAddedDetailStatus_Stop_NotModifyWirstAddedDetailStatus()
+        {
+            var writeHeader = ProtocolWriteHeaderFactoryHelper.ProtocolWriteHeaderWithRepositoryMock();
+            Assert.IsNull(writeHeader.WorstAddedDetailStatus);
+            writeHeader.Start(null);
+            Assert.IsNull(writeHeader.WorstAddedDetailStatus);
+
+            //EndProcess is only for write DateTime as detail - do not modify WorstAddedDetailStatus
+            writeHeader.Stop();
+            Assert.IsNull(writeHeader.WorstAddedDetailStatus);
+        }
     }
 }

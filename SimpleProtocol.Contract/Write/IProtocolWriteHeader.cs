@@ -11,6 +11,7 @@ namespace SimpleProtocol.Contract.Write
         //THeaderId StartUniqueLinkedObject(string p_HeaderName, LinkedObject p_LinkedObject);
         DateTime? StartedTime { get; }
         void AddDetail(ProtocolStatus p_Status, string p_Text);
+        ProtocolStatus? WorstAddedDetailStatus { get; }
         void AddLinkedObject(LinkedObject p_LinkedObject);
         void Stop();
         DateTime? StoppedTime { get; }
