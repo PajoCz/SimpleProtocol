@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DateTimeDefaultImpl.cs" />
+    <Compile Include="LoginThread.cs" />
     <Compile Include="LoginNullImpl.cs" />
     <Compile Include="Read\ProtocolReadHeader.cs" />
     <Compile Include="Repository\ProtocolWriteRepositoryFile.cs" />
