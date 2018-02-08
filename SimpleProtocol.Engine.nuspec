@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SimpleProtocol.Engine</id>
-    <version>3.2.0</version>
+    <version>3.3.0</version>
     <authors>pbalas</authors>
     <owners>pbalas</owners>
     <licenseUrl>https://github.com/PajoCz/RuleEvaluator/blob/master/licence.txt</licenseUrl>
