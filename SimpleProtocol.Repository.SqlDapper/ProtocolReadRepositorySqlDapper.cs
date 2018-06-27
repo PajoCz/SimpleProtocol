@@ -11,7 +11,7 @@ using SimpleProtocol.Contract.Read;
 
 namespace SimpleProtocol.Repository.SqlDapper
 {
-    public class ProtocolReadRepositorySqlDapper : IProtocolReadRepository<long>
+    public class ProtocolReadRepositorySqlDapper : IProtocolReadRepository<long, long>
     {
         private readonly string _ConnectionString;
 
@@ -20,7 +20,7 @@ namespace SimpleProtocol.Repository.SqlDapper
             _ConnectionString = p_ConnectionString;
         }
 
-        public IEnumerable<ProtocolHeader<long>> FindByLinkedObject(LinkedObject p_LinkedObject, bool p_LoadDetails)
+        public IEnumerable<ProtocolHeader<long, long>> FindByLinkedObject(LinkedObject p_LinkedObject, bool p_LoadDetails)
         {
             using (var conn = new SqlConnection(_ConnectionString))
             {
@@ -35,7 +35,7 @@ namespace SimpleProtocol.Repository.SqlDapper
                     foundDetails.ForEach(d =>
                     {
                         var headerForDetail = result.Find(r => r.HeaderId == d.HeaderId);
-                        (headerForDetail.Details as IList<ProtocolDetail>).Add(d.ToProtocolDetail());
+                        (headerForDetail.Details as IList<ProtocolDetail<long>>).Add(d.ToProtocolDetail());
                     });
                 }
 

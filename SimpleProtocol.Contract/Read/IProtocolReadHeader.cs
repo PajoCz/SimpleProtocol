@@ -2,8 +2,8 @@
 
 namespace SimpleProtocol.Contract.Read
 {
-    public interface IProtocolReadHeader<THeaderId>
+    public interface IProtocolReadHeader<THeaderId, TDetailId>
     {
-        IEnumerable<ProtocolHeader<THeaderId>> FindByLinkedObject(LinkedObject p_LinkedObject, bool p_LoadDetails);
+        IEnumerable<ProtocolHeader<THeaderId, TDetailId>> FindByLinkedObject(LinkedObject p_LinkedObject, bool p_LoadDetails);
     }
 }

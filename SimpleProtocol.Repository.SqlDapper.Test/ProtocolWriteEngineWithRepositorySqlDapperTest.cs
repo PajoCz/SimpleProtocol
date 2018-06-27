@@ -16,7 +16,7 @@ namespace SimpleProtocol.Repository.SqlDapper.Test
         [Test]
         public void WriteHeader_Create_MoreAddDetails_MoreAddLinkedObject()
         {
-            var writeHeaderFactory = new ProtocolWriteHeaderFactory<long>(new DateTimeDefaultImpl(), new LoginNullImpl("CreatedFromLoginX"),
+            var writeHeaderFactory = new ProtocolWriteHeaderFactory<long, long>(new DateTimeDefaultImpl(), new LoginNullImpl("CreatedFromLoginX"),
                 new ProtocolWriteRepositorySqlDapper(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString));
             using (var writeHeader = writeHeaderFactory.Create("HeaderName1"))
             {
@@ -32,7 +32,7 @@ namespace SimpleProtocol.Repository.SqlDapper.Test
         {
             var linkedObject = new LinkedObject() { ObjectName = "ObjectName1", ObjectId = "ObjectId" + new Random().Next() };
 
-            var writeHeaderFactory = new ProtocolWriteHeaderFactory<long>(new DateTimeDefaultImpl(), new LoginNullImpl("CreatedFromLoginX"),
+            var writeHeaderFactory = new ProtocolWriteHeaderFactory<long, long>(new DateTimeDefaultImpl(), new LoginNullImpl("CreatedFromLoginX"),
                 new ProtocolWriteRepositorySqlDapper(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString));
             using (var writeHeader = writeHeaderFactory.CreateAutoStop("HeaderForObject1", linkedObject))
             {

@@ -15,10 +15,11 @@ namespace SimpleProtocol.Repository.SqlDapper
         public int StatusId { get; set; }
         public string Text { get; set; }
 
-        public ProtocolDetail ToProtocolDetail()
+        public ProtocolDetail<long> ToProtocolDetail()
         {
-            return new ProtocolDetail()
+            return new ProtocolDetail<long>()
             {
+                DetailId = DetailId,
                 CreatedDate = CreatedDate,
                 Status = (ProtocolStatus) StatusId,
                 Text = Text,

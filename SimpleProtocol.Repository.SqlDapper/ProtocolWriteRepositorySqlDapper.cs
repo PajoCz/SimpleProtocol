@@ -8,7 +8,7 @@ using SimpleProtocol.Contract.Write;
 
 namespace SimpleProtocol.Repository.SqlDapper
 {
-    public class ProtocolWriteRepositorySqlDapper : IProtocolWriteRepository<long>
+    public class ProtocolWriteRepositorySqlDapper : IProtocolWriteRepository<long, long>
     {
         private readonly string _ConnectionString;
 
@@ -57,12 +57,12 @@ namespace SimpleProtocol.Repository.SqlDapper
         //    }
         //}
 
-        public void AddDetail(long p_HeaderId, DateTime p_DateTimeNow, ProtocolStatus p_Status, string p_Text)
+        public long AddDetail(long p_HeaderId, DateTime p_DateTimeNow, ProtocolStatus p_Status, string p_Text)
         {
             using (var conn = new SqlConnection(_ConnectionString))
             {
                 conn.Open();
-                conn.Insert(new DetailRow {HeaderId = p_HeaderId, CreatedDate = p_DateTimeNow, StatusId = (int) p_Status, Text = p_Text});
+                return conn.Insert(new DetailRow {HeaderId = p_HeaderId, CreatedDate = p_DateTimeNow, StatusId = (int) p_Status, Text = p_Text});
             }
         }
 

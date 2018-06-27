@@ -28,10 +28,10 @@ namespace SimpleProtocol.Engine.Test
             }
         }
 
-        private static ProtocolWriteHeaderFactory<long> ProtocolWriteHeaderFactoryWithRepositoryFile()
+        private static ProtocolWriteHeaderFactory<long, long> ProtocolWriteHeaderFactoryWithRepositoryFile()
         {
             string dt = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss-ffffff");
-            return new ProtocolWriteHeaderFactory<long>(new DateTimeDefaultImpl(), new LoginNullImpl(), new ProtocolWriteRepositoryFile(
+            return new ProtocolWriteHeaderFactory<long, long>(new DateTimeDefaultImpl(), new LoginNullImpl(), new ProtocolWriteRepositoryFile(
                 "D:\\protocol " + dt + " HeaderId{0}.txt"));
         }
     }

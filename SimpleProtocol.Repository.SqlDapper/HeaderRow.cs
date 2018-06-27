@@ -14,15 +14,15 @@ namespace SimpleProtocol.Repository.SqlDapper
         public string CreatedLogin { get; set; }
         public string Name { get; set; }
 
-        public ProtocolHeader<long> ToProtocolHeader()
+        public ProtocolHeader<long, long> ToProtocolHeader()
         {
-            return new ProtocolHeader<long>()
+            return new ProtocolHeader<long, long>()
             {
                 HeaderId = HeaderId,
                 CreatedDate = CreatedDate,
                 CreatedLogin = CreatedLogin,
                 Name = Name,
-                Details = new List<ProtocolDetail>()
+                Details = new List<ProtocolDetail<long>>()
             };
         }
     }

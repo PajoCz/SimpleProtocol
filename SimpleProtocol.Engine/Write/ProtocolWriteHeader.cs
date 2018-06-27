@@ -7,18 +7,18 @@ namespace SimpleProtocol.Engine.Write
     /// <summary>
     ///     Has InnerState - must be unique instance for every call / thread
     /// </summary>
-    public class ProtocolWriteHeader<THeaderId> : IProtocolWriteHeader<THeaderId>, IDisposable
+    public class ProtocolWriteHeader<THeaderId, TDetailId> : IProtocolWriteHeader<THeaderId, TDetailId>, IDisposable
     {
         #region Injected dependencies
 
         private readonly IDateTime _DateTime;
         private readonly ILogin _Login;
-        private readonly IProtocolWriteRepository<THeaderId> _ProtocolWriteRepository;
+        private readonly IProtocolWriteRepository<THeaderId, TDetailId> _ProtocolWriteRepository;
         private readonly bool _AutoStop;
 
         #endregion
 
-        public ProtocolWriteHeader(IDateTime p_DateTime, ILogin p_Login, IProtocolWriteRepository<THeaderId> p_ProtocolWriteRepository, bool p_AutoStop)
+        public ProtocolWriteHeader(IDateTime p_DateTime, ILogin p_Login, IProtocolWriteRepository<THeaderId, TDetailId> p_ProtocolWriteRepository, bool p_AutoStop)
         {
             _DateTime = p_DateTime;
             _Login = p_Login;
@@ -63,14 +63,15 @@ namespace SimpleProtocol.Engine.Write
         //    return HeaderId;
         //}
 
-        public void AddDetail(ProtocolStatus p_Status, string p_Text)
+        public TDetailId AddDetail(ProtocolStatus p_Status, string p_Text)
         {
             if (InnerState != ProtocolWriteHeaderInnerState.Started)
                 throw new ProtocolWriteHeaderInnerStateException($"InnerState is {InnerState}, but must be {ProtocolWriteHeaderInnerState.Started}");
-            _ProtocolWriteRepository.AddDetail(HeaderId, _DateTime.Now, p_Status, p_Text);
+            var result = _ProtocolWriteRepository.AddDetail(HeaderId, _DateTime.Now, p_Status, p_Text);
             if (p_Status != ProtocolStatus.EndProcess 
                 && (WorstAddedDetailStatus == null || WorstAddedDetailStatus < p_Status))
                 WorstAddedDetailStatus = p_Status;
+            return result;
         }
 
         public ProtocolStatus? WorstAddedDetailStatus { get; private set; }
