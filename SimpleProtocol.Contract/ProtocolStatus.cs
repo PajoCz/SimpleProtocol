@@ -7,5 +7,6 @@
         Error,
         Failed,
         EndProcess,
+        Info,
     }
 }

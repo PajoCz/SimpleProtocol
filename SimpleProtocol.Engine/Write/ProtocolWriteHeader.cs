@@ -1,5 +1,6 @@
 ﻿using System;
 using SimpleProtocol.Contract;
+using SimpleProtocol.Contract.Extensions;
 using SimpleProtocol.Contract.Write;
 
 namespace SimpleProtocol.Engine.Write
@@ -69,7 +70,7 @@ namespace SimpleProtocol.Engine.Write
                 throw new ProtocolWriteHeaderInnerStateException($"InnerState is {InnerState}, but must be {ProtocolWriteHeaderInnerState.Started}");
             var result = _ProtocolWriteRepository.AddDetail(HeaderId, _DateTime.Now, p_Status, p_Text);
             if (p_Status != ProtocolStatus.EndProcess 
-                && (WorstAddedDetailStatus == null || WorstAddedDetailStatus < p_Status))
+                && (WorstAddedDetailStatus == null || ProtocolStatusExtensions.StatusWorstIndex[WorstAddedDetailStatus.Value] < ProtocolStatusExtensions.StatusWorstIndex[p_Status]))
                 WorstAddedDetailStatus = p_Status;
             return result;
         }

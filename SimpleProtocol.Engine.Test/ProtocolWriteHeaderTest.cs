@@ -44,6 +44,9 @@ namespace SimpleProtocol.Engine.Test
             writeHeader.Start(null);
             Assert.IsNull(writeHeader.WorstAddedDetailStatus);
 
+            writeHeader.AddDetail(ProtocolStatus.Info, null);
+            Assert.AreEqual(ProtocolStatus.Info, writeHeader.WorstAddedDetailStatus);
+
             writeHeader.AddDetail(ProtocolStatus.Ok, null);
             Assert.AreEqual(ProtocolStatus.Ok, writeHeader.WorstAddedDetailStatus);
 
