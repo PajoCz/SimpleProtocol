@@ -5,16 +5,23 @@ using Dapper;
 using Dapper.Contrib.Extensions;
 using SimpleProtocol.Contract;
 using SimpleProtocol.Contract.Write;
+using SimpleProtocol.Repository.SqlDapper.ProducerConsumer;
 
 namespace SimpleProtocol.Repository.SqlDapper
 {
     public class ProtocolWriteRepositorySqlDapper : IProtocolWriteRepository<long, long>
     {
         private readonly string _ConnectionString;
+        private readonly bool _UseInMemoryCacheDetailAndBulkInsert;
+        private static readonly QueueDetail _CacheDetail = new QueueDetail() { WorkBatchItems = 1000, WorkBatchTimeout = TimeSpan.FromSeconds(1)};
 
-        public ProtocolWriteRepositorySqlDapper(string p_ConnectionString)
+        //Optional dependency injected class
+        public IConsumerThreadExceptionProcessing ConsumerThreadExceptionProcessing { get; set; }
+
+        public ProtocolWriteRepositorySqlDapper(string p_ConnectionString, bool p_UseInMemoryCacheDetailAndBulkInsert = false)
         {
             _ConnectionString = p_ConnectionString;
+            _UseInMemoryCacheDetailAndBulkInsert = p_UseInMemoryCacheDetailAndBulkInsert;
         }
 
         public long Start(DateTime p_DateTimeNow, string p_Login, string p_HeaderName)
@@ -59,6 +66,21 @@ namespace SimpleProtocol.Repository.SqlDapper
 
         public long AddDetail(long p_HeaderId, DateTime p_DateTimeNow, ProtocolStatus p_Status, string p_Text)
         {
+            if (_UseInMemoryCacheDetailAndBulkInsert)
+            {
+                if (_CacheDetail.ExceptionProcessing == null)
+                    _CacheDetail.ExceptionProcessing = ConsumerThreadExceptionProcessing;
+                _CacheDetail.AddItem(new QueueItemDetail()
+                {
+                    ConnectionString = _ConnectionString,
+                    DateTimeNow = p_DateTimeNow,
+                    HeaderId = p_HeaderId,
+                    Status = p_Status,
+                    Text = p_Text
+                });
+                return 0;
+            }
+
             using (var conn = new SqlConnection(_ConnectionString))
             {
                 conn.Open();
@@ -68,11 +90,7 @@ namespace SimpleProtocol.Repository.SqlDapper
 
         public void Stop(long p_HeaderId, DateTime p_DateTimeNow)
         {
-            using (var conn = new SqlConnection(_ConnectionString))
-            {
-                conn.Open();
-                conn.Insert(new DetailRow { HeaderId = p_HeaderId, CreatedDate = p_DateTimeNow, StatusId = (int)ProtocolStatus.EndProcess});
-            }
+            AddDetail(p_HeaderId, p_DateTimeNow, ProtocolStatus.EndProcess, null);
         }
 
         public void AddLinkedObject(long p_HeaderId, LinkedObject p_LinkedObject)

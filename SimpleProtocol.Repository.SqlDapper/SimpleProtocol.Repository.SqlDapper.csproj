@@ -48,12 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="QueueDetail.cs" />
     <Compile Include="LinkedObjectRow.cs" />
     <Compile Include="DetailRow.cs" />
     <Compile Include="HeaderRow.cs" />
+    <Compile Include="ProducerConsumer\IQueueItemGroupId.cs" />
+    <Compile Include="ProducerConsumer\QueueConsumerFindModeItem.cs" />
+    <Compile Include="ProducerConsumer\QueueWithConsumerThreadD3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtocolReadRepositorySqlDapper.cs" />
     <Compile Include="ProtocolWriteRepositorySqlDapper.cs" />
+    <Compile Include="QueueItemDetail.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleProtocol.Contract\SimpleProtocol.Contract.csproj">
